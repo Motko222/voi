@@ -1,3 +1,3 @@
 #!/bin/bash
 
-curl -sL1 avail.sh | bash
+curl -sL1 https://nubit.sh | bash
