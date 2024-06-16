@@ -16,3 +16,5 @@ EOF
 
 sudo systemctl daemon-reload
 sudo systemctl enable nubit-lightd
+
+echo "Service created, start with start-service.sh"
