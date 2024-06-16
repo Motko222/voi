@@ -1,6 +1,6 @@
 #!/bin/bash
  
-sudo systemctl restart availightd
+sudo systemctl restart nubit-lightd
 
 echo "Service started (CTRL-C to close logs)"
-sudo journalctl -u availightd -f --no-hostname -o cat
+sudo journalctl -u nubit-lightd -f --no-hostname -o cat
