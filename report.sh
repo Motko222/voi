@@ -18,7 +18,8 @@ version=$(/root/.nubit/bin/nubit-light -V | awk '{print $2}')
 
 service=$(sudo systemctl status nubit-lightd --no-pager | grep "active (running)" | wc -l)
 if [ $service -ne 1 ]
-then status="error"; message="service not running"
+then status="error"; message="service not running";
+else status="ok";
 fi
 
 cat << EOF
