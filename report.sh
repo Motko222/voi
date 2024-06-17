@@ -9,12 +9,12 @@ group=node
 
 version=$(/root/.nubit/bin/nubit-light -V | awk '{print $2}')
 
-health=$(curl -sS -I "http://localhost:7000/health" | head -1 | awk '{print $2}')
-if [ -z $health ]; then health=null; fi
-case $health in
- 200) status=ok ;;
- *)   status=warning;message="health - $health" ;;
-esac
+#health=$(curl -sS -I "http://localhost:7000/health" | head -1 | awk '{print $2}')
+#if [ -z $health ]; then health=null; fi
+#case $health in
+# 200) status=ok ;;
+# *)   status=warning;message="health - $health" ;;
+#esac
 
 service=$(sudo systemctl status nubit-lightd --no-pager | grep "active (running)" | wc -l)
 if [ $service -ne 1 ]
