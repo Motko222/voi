@@ -7,7 +7,7 @@ network=testnet
 type="light node"
 group=node
 
-version=$(/root/.nubit/bin/nubit-light -V | awk '{print $2}')
+version=$(/root/nubit-node/bin/nubit version | grep "Semantic version" | awk '{print $3}')
 
 #health=$(curl -sS -I "http://localhost:7000/health" | head -1 | awk '{print $2}')
 #if [ -z $health ]; then health=null; fi
