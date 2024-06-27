@@ -1,13 +1,13 @@
 #!/bin/bash
 
-sudo tee /etc/systemd/system/nubit-lightd.service > /dev/null <<EOF
+sudo tee /etc/systemd/system/farcaster.service > /dev/null <<EOF
 [Unit]
-Description=Nubit Light Client
+Description=Farcaster Hubble Client
 After=network.target
 StartLimitIntervalSec=0
 [Service]
 User=root
-ExecStart=/root/scripts/nubit-light/start-light.sh
+ExecStart=/root/scripts/farcaster/start-hubble.sh
 Restart=always
 RestartSec=30
 [Install]
@@ -15,6 +15,6 @@ WantedBy=multi-user.target
 EOF
 
 sudo systemctl daemon-reload
-sudo systemctl enable nubit-lightd
+sudo systemctl enable farcaster
 
 echo "Service created, start with start-service.sh"
