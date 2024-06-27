@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo journalctl -u farcaster -f --no-hostname -o cat
+docker logs --tail 100 -f hubble_hubble_1
