@@ -1,13 +1,13 @@
 #!/bin/bash
 
 source ~/.bash_profile
-id=$NUBIT_ID
-chain=nubit-alphatestnet-1
-network=testnet
-type="light node"
+id=$FARCASTER_ID
+chain=?
+network=mainnet
+type="hubble"
 group=node
 
-version=$(/root/nubit-node/bin/nubit version | grep "Semantic version" | awk '{print $3}')
+#version=$(/root/nubit-node/bin/nubit version | grep "Semantic version" | awk '{print $3}')
 
 #health=$(curl -sS -I "http://localhost:7000/health" | head -1 | awk '{print $2}')
 #if [ -z $health ]; then health=null; fi
@@ -16,7 +16,7 @@ version=$(/root/nubit-node/bin/nubit version | grep "Semantic version" | awk '{p
 # *)   status=warning;message="health - $health" ;;
 #esac
 
-service=$(sudo systemctl status nubit-lightd --no-pager | grep "active (running)" | wc -l)
+service=$(sudo systemctl status farcaster --no-pager | grep "active (running)" | wc -l)
 if [ $service -ne 1 ]
 then status="error"; message="service not running";
 else status="ok";
