@@ -1,26 +1,20 @@
 #!/bin/bash
 
 source ~/.bash_profile
+
 id=$FARCASTER_ID
 chain=?
 network=mainnet
 type="hubble"
 group=node
 
-#version=$(/root/nubit-node/bin/nubit version | grep "Semantic version" | awk '{print $3}')
+docker_status=$(docker inspect hubble_hubble_1 | jq -r .[].State.Status)
+version=?
 
-#health=$(curl -sS -I "http://localhost:7000/health" | head -1 | awk '{print $2}')
-#if [ -z $health ]; then health=null; fi
-#case $health in
-# 200) status=ok ;;
-# *)   status=warning;message="health - $health" ;;
-#esac
-
-service=$(sudo systemctl status farcasterd --no-pager | grep "active (running)" | wc -l)
-if [ $service -ne 1 ]
-then status="error"; message="service not running";
-else status="ok";
-fi
+case $docker_status in
+  running) status=ok ;;
+  *) status="error"; message="docker not running" ;;
+esac
 
 cat << EOF
 {
@@ -29,11 +23,8 @@ cat << EOF
   "version":"$version",
   "chain":"$chain",
   "network":"$network",
-  "type":"node",
   "status":"$status",
   "message":"$message",
-  "service":$service,
-  "health":$health,
   "updated":"$(date --utc +%FT%TZ)"
 }
 EOF
