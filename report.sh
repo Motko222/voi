@@ -16,7 +16,7 @@ group=node
 # *)   status=warning;message="health - $health" ;;
 #esac
 
-service=$(sudo systemctl status farcaster --no-pager | grep "active (running)" | wc -l)
+service=$(sudo systemctl status farcasterd --no-pager | grep "active (running)" | wc -l)
 if [ $service -ne 1 ]
 then status="error"; message="service not running";
 else status="ok";
