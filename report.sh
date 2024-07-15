@@ -11,7 +11,8 @@ owner=$VOI_OWNER
 
 cd ~/voi/bin
 
-docker_status=$(docker inspect voinetwork_algod.1.iltqhyabztc2ee2p4vbcmudgl | jq -r .[].State.Status)
+container=$(docker ps | grep voinetwork/docker-participation-node | awk '{print $NF}')
+docker_status=$(docker inspect $container | jq -r .[].State.Status)
 status_file=~/logs/voi-status
 ./get-node-status >$status_file
 
