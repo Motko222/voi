@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker logs --tail 100 -f voinetwork_algod.1.iltqhyabztc2ee2p4vbcmudgl
+container=$(docker ps | grep voinetwork/docker-participation-node | awk '{print $NF}')
+docker logs --tail 100 -f $container
