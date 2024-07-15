@@ -1,4 +1,3 @@
 #!/bin/bash
  
-cd ~/hubble
-./hubble.sh up
+/bin/bash -c "$(curl -fsSL https://get.voi.network/swarm)"
