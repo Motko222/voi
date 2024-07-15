@@ -9,10 +9,11 @@ type=node
 group=node
 owner=$VOI_OWNER
 
+cd ~/voi/bin
 docker_status=$(docker inspect voinetwork_algod.1.iltqhyabztc2ee2p4vbcmudgl | jq -r .[].State.Status)
-node_status=$(get-node-status)
+node_status=$(./get-node-status)
 
-version=$(cat $node_status | grep Build | awk '{print $2})
+version=$(cat $node_status | grep Build | awk '{print $2}')
 
 case $docker_status in
   running) status=ok ;;
