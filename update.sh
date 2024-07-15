@@ -1,4 +1,3 @@
 #!/bin/bash
 
-cd ~/hubble
-./hubble.sh upgrade
+/bin/bash -c "$(curl -fsSL https://get.voi.network/swarm)"
