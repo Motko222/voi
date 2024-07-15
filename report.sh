@@ -2,14 +2,17 @@
 
 source ~/.bash_profile
 
-id=$FARCASTER_ID
-chain=?
-network=mainnet
-type="hubble"
+id=$VOI_ID
+chain=testnet
+network=testnet
+type=node
 group=node
+owner=$VOI_OWNER
 
-docker_status=$(docker inspect hubble_hubble_1 | jq -r .[].State.Status)
-version=?
+docker_status=$(docker inspect voinetwork_algod.1.iltqhyabztc2ee2p4vbcmudgl | jq -r .[].State.Status)
+node_status=$(get-node-status)
+
+version=$(cat $node_status | grep Build | awk '{print $2})
 
 case $docker_status in
   running) status=ok ;;
@@ -38,6 +41,6 @@ then
   --header "Content-Type: text/plain; charset=utf-8" \
   --header "Accept: application/json" \
   --data-binary "
-    report,id=$id,machine=$MACHINE,grp=$group status=\"$status\",message=\"$message\",version=\"$version\",url=\"$url\",chain=\"$chain\",network=\"$network\" $(date +%s%N) 
+    report,id=$id,machine=$MACHINE,grp=$group,owner=$owner status=\"$status\",message=\"$message\",version=\"$version\",url=\"$url\",chain=\"$chain\",network=\"$network\" $(date +%s%N) 
     "
 fi
