@@ -1,3 +1,4 @@
 #!/bin/bash
-
-curl -sSL https://download.thehubble.xyz/bootstrap.sh | bash
+ 
+/bin/bash -c "$(curl -fsSL https://get.voi.network/swarm)"
+export PATH="$PATH:/root/voi/bin" >> ~/.bashrc && source ~/.bashrc
