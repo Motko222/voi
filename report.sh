@@ -7,7 +7,7 @@ chain=testnet
 network=testnet
 type=node
 group=node
-owner=$VOI_OWNER
+owner=$OWNER
 
 cd ~/voi/bin
 
