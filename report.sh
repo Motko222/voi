@@ -17,7 +17,7 @@ status_file=~/logs/voi-status
 
 version=$(cat $status_file | grep Build | awk '{print $2}')
 chain=$(cat $status_file | grep GenesisID | awk '{print $2}')
-network=$(echo $chain | cut -d- -f 1 | sed 's/voi//g')
+network=$(echo $chain | cut -d- -f 1 | sed 's/voi//g')net
 
 case $docker_status in
   running) status=ok ;;
