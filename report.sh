@@ -3,8 +3,6 @@
 source ~/.bash_profile
 
 id=$VOI_ID
-network=testnet
-type=node
 group=node
 owner=$OWNER
 
