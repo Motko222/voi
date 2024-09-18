@@ -10,7 +10,7 @@ owner=$OWNER
 
 cd ~/voi/bin
 
-container=$(docker ps | grep voinetwork/docker-participation-node | awk '{print $NF}')
+container=$(docker ps | grep -E "voinetwork/docker-participation-node|voinetwork/voi-node-participation-mainnet" | awk '{print $NF}')
 docker_status=$(docker inspect $container | jq -r .[].State.Status)
 status_file=~/logs/voi-status
 ./get-node-status >$status_file
