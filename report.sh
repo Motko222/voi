@@ -3,7 +3,6 @@
 source ~/.bash_profile
 
 id=$VOI_ID
-chain=testnet
 network=testnet
 type=node
 group=node
@@ -17,6 +16,8 @@ status_file=~/logs/voi-status
 ./get-node-status >$status_file
 
 version=$(cat $status_file | grep Build | awk '{print $2}')
+chain=$(cat $status_file | grep GenesisID | awk '{print $2}')
+network=$(echo $chain | cut -d- -f 1 | sed 's/voi//g')
 
 case $docker_status in
   running) status=ok ;;
