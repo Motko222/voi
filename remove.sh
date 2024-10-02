@@ -9,5 +9,5 @@ case $sure in  y|Y|yes|YES|Yes) ;; *) exit ;; esac
 docker swarm leave --force
 rm -rf ~/voi/
 rm -rf /var/lib/voi
-rm -rf /scripts/$folder
-bash /scripts/system/delete-id.sh $folder
+rm -rf ~/scripts/$folder
+bash ~/scripts/system/delete-id.sh $folder
