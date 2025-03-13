@@ -6,4 +6,4 @@ cd $path
 source config
 
 cd ~/voi/bin
-./go-online $WALLET
+./go-offline $WALLET
