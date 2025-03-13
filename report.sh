@@ -4,6 +4,8 @@ path=$(cd -- $(dirname -- "${BASH_SOURCE[0]}") && pwd)
 folder=$(echo $path | awk -F/ '{print $NF}')
 json=~/logs/report-$folder
 source ~/.bash_profile
+source $path/config
+
 
 cd ~/voi/bin
 
@@ -26,7 +28,7 @@ cat >$json << EOF
   "updated":"$(date --utc +%FT%TZ)",
   "measurement":"report",
   "tags": {
-         "id":"$VOI_ID",
+         "id":"$folder-$ID",
          "machine":"$MACHINE",
          "grp":"node",
          "owner":"$OWNER"
