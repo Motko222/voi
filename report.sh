@@ -12,7 +12,7 @@ cd ~/voi/bin
 container=$(docker ps | grep -E "voinetwork/docker-participation-node|voinetwork/voi-node" | awk '{print $NF}')
 docker_status=$(docker inspect $container | jq -r .[].State.Status)
 status_file=~/logs/voi-status
-./get-node-status >$status_file
+sudo ./get-node-status >$status_file
 
 version=$(cat $status_file | grep Build | awk '{print $2}')
 chain=$(cat $status_file | grep GenesisID | awk '{print $2}')
