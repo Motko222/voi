@@ -2,16 +2,16 @@
 
 path=$(cd -- $(dirname -- "${BASH_SOURCE[0]}") && pwd)
 folder=$(echo $path | awk -F/ '{print $NF}')
-json=~/logs/report-$folder
-source ~/.bash_profile
+json=/root/logs/report-$folder
+source /root/.bash_profile
 source $path/config
 
 
-cd ~/voi/bin
+cd /root/voi/bin
 
 container=$(docker ps | grep -E "voinetwork/docker-participation-node|voinetwork/voi-node" | awk '{print $NF}')
 docker_status=$(docker inspect $container | jq -r .[].State.Status)
-status_file=~/logs/voi-status
+status_file=/root/logs/voi-status
 sudo ./get-node-status >$status_file
 
 version=$(cat $status_file | grep Build | awk '{print $2}')
