@@ -16,7 +16,6 @@ sudo ./get-node-status >$status_file
 
 version=$(cat $status_file | grep Build | awk '{print $2}')
 chain=$(cat $status_file | grep GenesisID | awk '{print $2}')
-network=$(echo $chain | cut -d- -f 1 | sed 's/voi//g')net
 
 case $docker_status in
   running) status=ok ;;
@@ -36,7 +35,7 @@ cat >$json << EOF
   "fields": {
         "version":"$version",
         "chain":"$chain",
-        "network":"$network",
+        "network":"mainnet",
         "status":"$status",
         "message":"$message"
   }
