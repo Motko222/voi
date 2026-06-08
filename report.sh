@@ -7,17 +7,11 @@ source /root/.bash_profile
 source $path/config
 
 
-cd /root/voi/bin
-
-container=$(docker ps | grep -E "voinetwork/docker-participation-node|voinetwork/voi-node|voinetwork_algod" | awk '{print $NF}' | head -1)
-docker_status=$(docker inspect $container 2>/dev/null | jq -r '.[].State.Status')
-status_file=/root/logs/voi-status
-sudo ./get-node-status >$status_file
-
-version=$(cat $status_file | grep Build | awk '{print $2}')
-
 CONTAINER_ID=$(docker ps -q -f name=voinetwork_algod)
+docker_status=$(docker inspect $CONTAINER_ID 2>/dev/null | jq -r '.[].State.Status')
+
 node_status=$(docker exec $CONTAINER_ID /node/bin/goal node status 2>/dev/null)
+version=$(docker exec $CONTAINER_ID /node/bin/goal version -v 2>/dev/null | grep "Build" | awk '{print $2}')
 chain=$(echo "$node_status" | grep "Genesis ID" | awk '{print $3}')
 current_round=$(echo "$node_status" | grep "Last committed block" | awk '{print $4}')
 
