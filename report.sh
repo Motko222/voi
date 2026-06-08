@@ -20,11 +20,13 @@ part_online=$(echo "$acct_dump" | jq -r 'if .onl == 1 then "online" else "offlin
 vote_lst=$(echo "$acct_dump" | jq -r '.voteLst // 0')
 rounds_left=$(( vote_lst - current_round ))
 balance=$(echo "$acct_dump" | jq -r '(.algo // 0) / 1000000 | floor')
+errors=$(docker logs $CONTAINER_ID --since 1h 2>&1 | grep -c -E "rror|ERR")
 
 case $docker_status in
   running) status=ok ;;
   *) status="error"; message="docker not running" ;;
 esac
+[ $errors -gt 50 ] && status="warning" && message="$errors errors last hour"
 [ "$part_online" = "offline" ] && status="error" && message="participation offline"
 
 cat >$json << EOF
@@ -43,6 +45,7 @@ cat >$json << EOF
         "network":"mainnet",
         "status":"$status",
         "message":"$message",
+        "errors":"$errors",
         "m1":"participation=$part_online",
         "m2":"rounds_left=$rounds_left",
         "m3":"balance=$balance VOI"
