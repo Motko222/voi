@@ -25,6 +25,7 @@ acct_dump=$(docker exec $CONTAINER_ID /node/bin/goal account dump -a $WALLET 2>/
 part_online=$(echo "$acct_dump" | jq -r 'if .onl == 1 then "online" else "offline" end')
 vote_lst=$(echo "$acct_dump" | jq -r '.voteLst // 0')
 rounds_left=$(( vote_lst - current_round ))
+balance=$(echo "$acct_dump" | jq -r '(.algo // 0) / 1000000 | floor')
 
 case $docker_status in
   running) status=ok ;;
@@ -49,7 +50,8 @@ cat >$json << EOF
         "status":"$status",
         "message":"$message",
         "m1":"participation=$part_online",
-        "m2":"rounds_left=$rounds_left"
+        "m2":"rounds_left=$rounds_left",
+        "m3":"balance=$balance VOI"
   }
 }
 EOF
