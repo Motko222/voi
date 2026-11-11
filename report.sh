@@ -22,12 +22,22 @@ rounds_left=$(( vote_lst - current_round ))
 balance=$(echo "$acct_dump" | jq -r '(.algo // 0) / 1000000 | floor')
 errors=$(docker logs $CONTAINER_ID --since 1h 2>&1 | grep -c -E "rror|ERR")
 
+escrow_online="n/a"
+escrow_rounds_left=0
+if [ -n "$STAKING_ESCROW" ]; then
+  escrow_dump=$(docker exec $CONTAINER_ID /node/bin/goal account dump -a $STAKING_ESCROW 2>/dev/null)
+  escrow_online=$(echo "$escrow_dump" | jq -r 'if .onl == 1 then "online" else "offline" end')
+  escrow_vote_lst=$(echo "$escrow_dump" | jq -r '.voteLst // 0')
+  escrow_rounds_left=$(( escrow_vote_lst - current_round ))
+fi
+
 case $docker_status in
   running) status=ok ;;
   *) status="error"; message="docker not running" ;;
 esac
 [ $errors -gt 50 ] && status="warning" && message="$errors errors last hour"
 [ "$part_online" = "offline" ] && status="error" && message="participation offline"
+[ -n "$STAKING_ESCROW" ] && [ "$escrow_online" = "offline" ] && status="error" && message="staking escrow participation offline"
 
 cat >$json << EOF
 {
@@ -48,7 +58,9 @@ cat >$json << EOF
         "errors":"$errors",
         "m1":"participation=$part_online",
         "m2":"rounds_left=$rounds_left",
-        "m3":"balance=$balance VOI"
+        "m3":"balance=$balance VOI",
+        "m4":"escrow_participation=$escrow_online",
+        "m5":"escrow_rounds_left=$escrow_rounds_left"
   }
 }
 EOF
